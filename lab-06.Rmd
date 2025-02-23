@@ -41,8 +41,7 @@ staff_long %>%
   geom_line(linewidth = 1.1) + 
   labs(
     title = "Trends in Instructional Staff Employment"
-  ) +
-  theme_minimal()
+  ) 
 ```
 
 
@@ -69,8 +68,7 @@ staff_long %>%
     x = "Year",
     y = "value",
     color = "Faculty Type"
-  ) +
-  theme_minimal() 
+  ) 
 # In a ggplot2 tutorial, I found out how to make one of my lines different from the others. the link is here: https://www.rdocumentation.org/packages/ggplot2/versions/0.9.1/topics/scale_colour_manual.
 
 
@@ -95,8 +93,7 @@ fisheries_data %>%
   labs(title = "Fishery Production by Country",
        x = "country",
        y = "Total Tonnage (tons)",
-       fill = "Production Type") +
-  theme_minimal()
+       fill = "Production Type") 
 # Nah... the above method made my bar charts all aggregated and it's impossible to see how each country is distributed.
 # maybe I need to try a different plot.
 # Nah, still not working, they all aggregated together. I may need to filter out the top country. I use top 15 countries. 
@@ -118,8 +115,7 @@ top15_fisheries %>%
     x = "Production (tons)",
     y = "Country",
     fill = "Production Type"
-  ) +
-  theme_minimal()
+  ) 
 
 # It works!! Many thanks for this guide: https://r-graph-gallery.com/web-horizontal-barplot-with-labels-the-economist.html.
 # and also for this guy's dplyr tutorials: https://dplyr.tidyverse.org/reference/slice.html
@@ -128,7 +124,87 @@ top15_fisheries %>%
 
 
 ### Exercise 3
+```{r,Stretch Practice with Smokers in Whickham}
+library(tidyverse)
+library(mosaicData)
+data(Whickham)
+
+Whickham
+
+# What type of study do you think these data come from: observational or experiment? Observational. Since this study is about smoking, I don't think any reasonable IRB would pass a study that asked participants to smoke or randomly assigned them to smoke or not.
+
+# How many observations are in this dataset? What does each observation represent? 1314 overcations, each row (observation) represent a participant. 
+
+# How many variables are in this dataset? What type of variable is each? 3 variables, each representing their health outcome (alive/dead), age, and whether or not they smoke. age is numeric variable, other two are categorical variable.
+
+# Display each variable using an appropriate visualization.
+# we can either display each variable separately.
+# but I think maybe we 're more intersted to konw the relationship between smoking status and healthoutcome, so I display these two in one graph. 
+
+# distribution of age
+ggplot(Whickham, aes(x = age)) +
+  geom_histogram(fill = "skyblue") +
+  labs(title = "Distribution of Age",
+       x = "Age",
+       y = "Frequency") 
+
+# distribution of smoking status
+ggplot(Whickham, aes(x = smoker)) +
+  geom_bar(fill = "lightblue") +
+  labs(title = "Smoking Status Distribution",
+       x = "Smoking Status",
+       y = "Count") 
+
+# distribution of health outcome
+ggplot(Whickham, aes(x = outcome)) +
+  geom_bar(fill = "pink") +
+  labs(title = "Health Outcome Distribution",
+       x = "Health Outcome",
+       y = "Count") 
+
+# distribution of smoker Vs. health outcome. 
+ ggplot(Whickham, aes(x = smoker, fill = outcome)) + 
+        geom_bar(position = "dodge") +
+   labs(title= "distribution of smoker Vs. health outcome")
+ # learn something new~ dodge: placed the variable side-by-side.
+ 
+# What would you expect the relationship between smoking status and health outcome to be? The longer the smoking history, the earlier the death. or people who smoke die earlier.
+
+
+```
+### Exercise 5
+```{r}
+# Create a visualization depicting the relationship between smoking status and health outcome. (above⬆️)
+# the data did shows that there are more non-smokers alive.
+
+#calculate the relevant conditional probabilities 
+Whickham %>%
+  count(smoker, outcome) %>%
+  group_by(smoker) %>%
+  mutate(prop = n / sum(n))
+```
+### Exercise 7
+```{r}
+Whickham<- Whickham %>%
+  mutate(age_cat = case_when(
+    age <= 44 ~ "18-44",
+    age > 44 & age <= 64 ~ "45-64",
+    age > 64 ~ "65+"
+  ))
+
+# display data by age_cat
+Whickham %>%
+  count(smoker, age_cat, outcome) %>%
+  ggplot(aes(smoker, n, fill = outcome)) +
+  geom_col(position = "fill") +
+  facet_wrap(~ age_cat) +
+  labs(title = "Smoking vs. Health Outcome by Age",
+       y = "Proportion",
+       x = "Smoker") 
+
+# The data is much more clearly distributed, and it is possible to see that the mortality rate actually rises with age.
+
+```
 
 ...
 
-Add exercise headings as needed.

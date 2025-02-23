@@ -1,0 +1,8 @@
+"0",""
+"0","# distribution of smoking status"
+"0","ggplot(Whickham, aes(x = smoker)) +"
+"0","  geom_bar(fill = ""lightblue"") +"
+"0","  labs(title = ""Smoking Status Distribution"","
+"0","       x = ""Smoking Status"","
+"0","       y = ""Count"") +"
+"0","  theme_minimal()"

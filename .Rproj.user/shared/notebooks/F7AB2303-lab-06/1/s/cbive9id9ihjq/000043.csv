@@ -1,0 +1,8 @@
+"0",""
+"0","# distribution of health outcome"
+"0","ggplot(Whickham, aes(x = outcome)) +"
+"0","  geom_bar(fill = ""pink"") +"
+"0","  labs(title = ""Health Outcome Distribution"","
+"0","       x = ""Health Outcome"","
+"0","       y = ""Count"") +"
+"0","  theme_minimal()"

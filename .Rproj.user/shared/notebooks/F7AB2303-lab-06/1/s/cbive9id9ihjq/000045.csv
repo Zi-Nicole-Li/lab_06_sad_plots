@@ -1,0 +1,5 @@
+"0",""
+"0","# distribution of smoker Vs. health outcome. "
+"0"," ggplot(Whickham, aes(x = smoker, fill = outcome)) + "
+"0","        geom_bar(position = ""dodge"") +"
+"0","   labs(title= ""distribution of smoker Vs. health outcome"")"

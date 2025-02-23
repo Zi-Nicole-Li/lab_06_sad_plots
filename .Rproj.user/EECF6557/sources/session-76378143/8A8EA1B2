@@ -3,7 +3,7 @@
     "path": "~/Documents/GitHub/lab_06_sad_plots/lab-06.Rmd",
     "project_path": "lab-06.Rmd",
     "type": "r_markdown",
-    "hash": "2331009219",
+    "hash": "830642245",
     "contents": "",
     "dirty": false,
     "created": 1740335569036.0,
@@ -12,16 +12,16 @@
     "properties": {
         "source_window_id": "",
         "Source": "Source",
-        "cursorPosition": "108,33",
-        "scrollLine": "90",
+        "cursorPosition": "43,4",
+        "scrollLine": "21",
         "ignored_words": "gmail\n"
     },
     "folds": "",
-    "lastKnownWriteTime": 1740339926,
+    "lastKnownWriteTime": 1740343704,
     "encoding": "UTF-8",
     "collab_server": "",
     "source_window": "",
-    "last_content_update": 1740339926491,
+    "last_content_update": 1740343704378,
     "read_only": false,
     "read_only_alternatives": []
 }
