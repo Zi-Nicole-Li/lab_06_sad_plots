@@ -109,9 +109,90 @@ staff_long %>%
 
 ### Exercise 2
 
-Remove this text, and add your answer for Exercise 1 here. Add code
-chunks as needed. Don’t forget to label your code chunk. Do not use
-spaces in code chunk labels.
+``` r
+# maybe we can use horizontal bar charts for easier comparison and clarity. 
+
+fisheries <- read_csv("data/fisheries.csv")
+```
+
+    ## Rows: 216 Columns: 4
+    ## ── Column specification ────────────────────────────────────────────────────────
+    ## Delimiter: ","
+    ## chr (1): country
+    ## dbl (3): capture, aquaculture, total
+    ## 
+    ## ℹ Use `spec()` to retrieve the full column specification for this data.
+    ## ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.
+
+``` r
+fisheries
+```
+
+    ## # A tibble: 216 × 4
+    ##    country             capture aquaculture  total
+    ##    <chr>                 <dbl>       <dbl>  <dbl>
+    ##  1 Afghanistan            1000        1200   2200
+    ##  2 Albania                7886         950   8836
+    ##  3 Algeria               95000        1361  96361
+    ##  4 American Samoa         3047          20   3067
+    ##  5 Andorra                   0           0      0
+    ##  6 Angola               486490         655 487145
+    ##  7 Antigua and Barbuda    3000          10   3010
+    ##  8 Argentina            755226        3673 758899
+    ##  9 Armenia                3758       16381  20139
+    ## 10 Aruba                   142           0    142
+    ## # ℹ 206 more rows
+
+``` r
+fisheries_data <- fisheries %>%
+  pivot_longer(cols = c(capture, aquaculture),
+               names_to = "Type",
+               values_to = "Tonnage")
+fisheries_data %>%
+  ggplot(aes(x = reorder(country, Tonnage), y = Tonnage, fill = Type)) +
+  geom_col() +
+  coord_flip() +
+  labs(title = "Fishery Production by Country",
+       x = "country",
+       y = "Total Tonnage (tons)",
+       fill = "Production Type") +
+  theme_minimal()
+```
+
+![](lab-06_files/figure-gfm/Fisheries-1.png)<!-- -->
+
+``` r
+# Nah... the above method made my bar charts all aggregated and it's impossible to see how each country is distributed.
+# maybe I need to try a different plot.
+# Nah, still not working, they all aggregated together. I may need to filter out the top country. I use top 15 countries. 
+
+top15_fisheries <- fisheries %>%
+  mutate(total = capture + aquaculture) %>%
+  arrange(desc(total)) %>% 
+  slice_head(n = 15) %>%
+  pivot_longer(cols = c(capture, aquaculture),
+               names_to = "type",
+               values_to = "production")
+# the above calculate my top 15 countries. 
+
+top15_fisheries %>%
+  ggplot(aes(x = production, y = fct_reorder(country, production), fill = type)) +
+  geom_col() +
+  labs(
+    title = "Top 15 Countries by Fishery Production",
+    x = "Production (tons)",
+    y = "Country",
+    fill = "Production Type"
+  ) +
+  theme_minimal()
+```
+
+![](lab-06_files/figure-gfm/Fisheries-2.png)<!-- -->
+
+``` r
+# It works!! Many thanks for this guide: https://r-graph-gallery.com/web-horizontal-barplot-with-labels-the-economist.html.
+# and also for this guy's dplyr tutorials: https://dplyr.tidyverse.org/reference/slice.html
+```
 
 ### Exercise 3
 

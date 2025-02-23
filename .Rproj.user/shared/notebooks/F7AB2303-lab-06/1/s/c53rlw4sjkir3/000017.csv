@@ -1,0 +1,14 @@
+"0","staff <- read_csv(""data/instructional-staff.csv"")"
+"2","[1mRows: [22m[34m5[39m [1mColumns: [22m[34m12[39m"
+"2","[36m──[39m [1mColumn specification[22m [36m──────────────────────────────────────────────────────────────────────────────────────────────[39m
+[1mDelimiter:[22m "",""
+[31mchr[39m  (1): faculty_type
+[32mdbl[39m (11): 1975, 1989, 1993, 1995, 1999, 2001, 2003, 2005, 2007, 2009, 2011"
+"2","
+[36mℹ[39m Use `spec()` to retrieve the full column specification for this data.
+[36mℹ[39m Specify the column types or set `show_col_types = FALSE` to quiet this message."
+"0","staff_long <- staff %>%"
+"0","  pivot_longer(cols = -faculty_type, names_to = ""year"") %>%"
+"0","  mutate(value = as.numeric(value))"
+"0",""
+"0","staff_long"
